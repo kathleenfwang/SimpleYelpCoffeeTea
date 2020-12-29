@@ -14,24 +14,49 @@ import kotlinx.android.synthetic.main.activity_main.*
 private const val TAG ="MainActivity"
 private const val BASE_URL = "https://api.yelp.com/v3/"
 private const val API_KEY = "-zAwAo1fT9CXF9XM1FnCNExAG930j7UTOtG_NMgFPgUa8IBIJhD5WDCCg4Zz45M6K9VGXnYXNdSbFDOhaKDAMKj1wv6L000PAeTQJ_6HFcbiP-wUONHFgq7O_YLrX3Yx"
+private var SEARCH = "coffee"
+private var LOCATION = "New York"
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // take response and create recycler view and render data
+        // recycler view uses an adapter to render list item data
+        startButton.setOnClickListener {
+            LOCATION = editLocation.text.toString()
+            getRestaurant()
+        }
+        categoryButton.setOnClickListener {
+            if (categoryButton.text == "Coffee") {
+                categoryButton.text = "Tea"
+                SEARCH = "Coffee"
+            }
+            else {
+                categoryButton.text =  "Coffee"
+                SEARCH = "tea"
+            }
+
+            getRestaurant()
+        }
+        getRestaurant()
+    }
+
+    private fun getRestaurant( ) {
         val restaurants = mutableListOf<YelpRestaurants>()
         val adapter = RestaurantsAdapter(this, restaurants)
-        // recycler view uses an adapter to render list item data
         rvRestaurants.adapter = adapter
         rvRestaurants.layoutManager = LinearLayoutManager(this)
         val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
         val yelpService = retrofit.create(YelpService::class.java)
-        yelpService.searchRestaurant("Bearer $API_KEY","coffee,tea", "San Francisco")
+        yelpService.searchRestaurant("Bearer $API_KEY", SEARCH, LOCATION)
             .enqueue(object : Callback<YelpSearchResult> {
-                override fun onResponse(call: Call<YelpSearchResult>, response: Response<YelpSearchResult>) {
+                override fun onResponse(
+                    call: Call<YelpSearchResult>,
+                    response: Response<YelpSearchResult>
+                ) {
 
                     Log.d(TAG, "Response ${response}")
                     val body = response.body()

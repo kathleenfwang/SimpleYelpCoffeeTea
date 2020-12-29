@@ -20,7 +20,8 @@ data class YelpRestaurants (
         ) {
     fun displayDistance() :String {
         val milesPerMeter = 0.000621371
-        return "${milesPerMeter * distanceInMeters} mi"
+        val distanceInMiles = "%.2f".format(milesPerMeter * distanceInMeters)
+        return "${distanceInMiles} mi"
     }
 }
 data class YelpLocation (
