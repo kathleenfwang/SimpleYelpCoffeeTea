@@ -1,12 +1,17 @@
 package com.kathleenwang.simpleyelp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
+private const val TAG ="MainActivity"
 private const val BASE_URL = "https://api.yelp.com/v3/"
+private const val API_KEY = "-zAwAo1fT9CXF9XM1FnCNExAG930j7UTOtG_NMgFPgUa8IBIJhD5WDCCg4Zz45M6K9VGXnYXNdSbFDOhaKDAMKj1wv6L000PAeTQJ_6HFcbiP-wUONHFgq7O_YLrX3Yx"
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,5 +21,19 @@ class MainActivity : AppCompatActivity() {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+        val yelpService = retrofit.create(YelpService::class.java)
+        yelpService.searchRestaurant("Bearer $API_KEY","coffee,tea", "San Francisco")
+            .enqueue(object : Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+
+                    Log.d(TAG, "Response ${response}")
+
+                }
+
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Log.d(TAG, "Failure: $t")
+                }
+
+            })
     }
 }
