@@ -9,6 +9,7 @@ data class YelpSearchResult (
         )
 
 data class YelpRestaurants (
+    val id: String,
     val name: String,
     val rating: Double,
     val price: String,

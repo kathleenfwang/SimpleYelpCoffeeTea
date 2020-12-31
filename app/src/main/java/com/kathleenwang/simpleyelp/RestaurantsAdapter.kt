@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.item_restaurant.view.*
 class RestaurantsAdapter(val context: Context, val restaurants: List<YelpRestaurants>) :
     RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>() {
 
+    var onItemClick: ((YelpRestaurants) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
          return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_restaurant, parent, false))
@@ -25,8 +26,12 @@ class RestaurantsAdapter(val context: Context, val restaurants: List<YelpRestaur
 
     override fun getItemCount() = restaurants.size
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    init {
+        itemView.setOnClickListener { onItemClick?.invoke(restaurants[adapterPosition])}
+    }
         fun bind(restaurant: YelpRestaurants) {
-        itemView.tvName.text = restaurant.name
+            itemView.tvName.text = restaurant.name
             itemView.ratingBar.rating = restaurant.rating.toFloat()
             itemView.tvNumReviews.text = "${restaurant.numReviews} reviews"
             itemView.tvAddress.text = restaurant.location.address

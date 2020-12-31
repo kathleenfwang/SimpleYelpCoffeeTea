@@ -2,14 +2,17 @@ package com.kathleenwang.simpleyelp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 private const val TAG ="MainActivity"
 private const val BASE_URL = "https://api.yelp.com/v3/"
@@ -22,10 +25,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         // take response and create recycler view and render data
         // recycler view uses an adapter to render list item data
+
         startButton.setOnClickListener {
             LOCATION = editLocation.text.toString()
             getRestaurant()
         }
+
         categoryButton.setOnClickListener {
             if (categoryButton.text == "Coffee") {
                 categoryButton.text = "Tea"
@@ -45,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         val restaurants = mutableListOf<YelpRestaurants>()
         val adapter = RestaurantsAdapter(this, restaurants)
         rvRestaurants.adapter = adapter
+        adapter.onItemClick = { restaurant ->
+            // do something with your item
+            Log.d("TAG", restaurant.toString())
+    }
         rvRestaurants.layoutManager = LinearLayoutManager(this)
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -54,8 +63,8 @@ class MainActivity : AppCompatActivity() {
         yelpService.searchRestaurant("Bearer $API_KEY", SEARCH, LOCATION)
             .enqueue(object : Callback<YelpSearchResult> {
                 override fun onResponse(
-                    call: Call<YelpSearchResult>,
-                    response: Response<YelpSearchResult>
+                        call: Call<YelpSearchResult>,
+                        response: Response<YelpSearchResult>
                 ) {
 
                     Log.d(TAG, "Response ${response}")
@@ -76,3 +85,5 @@ class MainActivity : AppCompatActivity() {
             })
     }
 }
+
+
