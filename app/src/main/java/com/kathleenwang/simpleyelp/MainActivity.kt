@@ -1,5 +1,6 @@
 package com.kathleenwang.simpleyelp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,11 +13,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-
 private const val TAG ="MainActivity"
-private const val BASE_URL = "https://api.yelp.com/v3/"
-private const val API_KEY = "-zAwAo1fT9CXF9XM1FnCNExAG930j7UTOtG_NMgFPgUa8IBIJhD5WDCCg4Zz45M6K9VGXnYXNdSbFDOhaKDAMKj1wv6L000PAeTQJ_6HFcbiP-wUONHFgq7O_YLrX3Yx"
+public const val BASE_URL = "https://api.yelp.com/v3/"
+public const val API_KEY = "-zAwAo1fT9CXF9XM1FnCNExAG930j7UTOtG_NMgFPgUa8IBIJhD5WDCCg4Zz45M6K9VGXnYXNdSbFDOhaKDAMKj1wv6L000PAeTQJ_6HFcbiP-wUONHFgq7O_YLrX3Yx"
 private var SEARCH = "coffee"
 private var LOCATION = "New York"
 class MainActivity : AppCompatActivity() {
@@ -53,6 +52,10 @@ class MainActivity : AppCompatActivity() {
         adapter.onItemClick = { restaurant ->
             // do something with your item
             Log.d("TAG", restaurant.toString())
+            val intent = Intent(this,SecondRestaurantActivity::class.java)
+            intent.putExtra("id",restaurant.id)
+            intent.putExtra("name",restaurant.name)
+            startActivity(intent)
     }
         rvRestaurants.layoutManager = LinearLayoutManager(this)
         val retrofit = Retrofit.Builder()
@@ -84,6 +87,8 @@ class MainActivity : AppCompatActivity() {
 
             })
     }
+
 }
+
 
 
