@@ -53,8 +53,7 @@ class MainActivity : AppCompatActivity() {
             // do something with your item
             Log.d("TAG", restaurant.toString())
             val intent = Intent(this,SecondRestaurantActivity::class.java)
-            intent.putExtra("id",restaurant.id)
-            intent.putExtra("name",restaurant.name)
+            intent.putExtra("restaurant",restaurant)
             startActivity(intent)
     }
         rvRestaurants.layoutManager = LinearLayoutManager(this)
@@ -69,14 +68,11 @@ class MainActivity : AppCompatActivity() {
                         call: Call<YelpSearchResult>,
                         response: Response<YelpSearchResult>
                 ) {
-
-                    Log.d(TAG, "Response ${response}")
                     val body = response.body()
                     if (body == null) {
                         Log.w(TAG, "Didnt receive body...exiting")
                         return
                     }
-                    Log.d(TAG, "Size: ${body.restaurants.size}")
                     restaurants.addAll(body.restaurants)
                     adapter.notifyDataSetChanged()
                 }
@@ -84,7 +80,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<YelpSearchResult>, t: Throwable) {
                     Log.d(TAG, "Failure: $t")
                 }
-
             })
     }
 
