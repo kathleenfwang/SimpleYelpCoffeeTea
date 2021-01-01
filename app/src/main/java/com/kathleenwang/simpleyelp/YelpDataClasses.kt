@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 // serializedName is part of gson for gson annotation to work
 // dont need to specify serialized name if it exactly matches the json parameter
-data class YelpRestaurantResult(val url: String, val display_phone: String?,val photos: List<String>?,val is_closed: Boolean?, val display_address: String?)
+data class YelpRestaurantResult(val url: String, val display_phone: String,val photos: List<String>,val is_closed: Boolean, val address1: String)
 
 data class YelpSearchResult (
     @SerializedName("total") val total: Int,

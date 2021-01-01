@@ -1,6 +1,8 @@
 package com.kathleenwang.simpleyelp
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +23,7 @@ class SecondRestaurantActivity : AppCompatActivity() {
         val restaurant = intent.getParcelableExtra<YelpRestaurants>("restaurant")
         if (restaurant !== null) {
             secondRatingBar.rating = restaurant.rating.toFloat()
+            displayAddress.text = restaurant.location.address
             secondtvName.text = restaurant.name
             val id = restaurant.id
             getData(this,id, restaurant)
@@ -43,14 +46,33 @@ class SecondRestaurantActivity : AppCompatActivity() {
                     val body = response.body()
                     if (body == null) {
                         Log.w(TAG, "Didnt receive body...exiting")
-                        return }
-//                    secondIsOpen.text = if (body.is_closed ) "Open" else "Closed"
-                    secondPhoneNumber.text = body.display_phone
-                    Glide.with(context).load(body.photos?.get(0))
-                        .fitCenter()
-                        .transform( RoundedCornersTransformation(20, 5))
-                        .into(secondtvImage.imageView)
-
+                        return
+                    }
+                    fullUrlButton.setOnClickListener {
+                        val openURL = Intent(Intent.ACTION_VIEW)
+                        openURL.data = Uri.parse(body.url)
+                        startActivity(openURL)
+                    }
+                    if (body.is_closed ) {
+                        secondIsOpen.setTextColor(resources.getColor(R.color.teal_200))
+                        secondIsOpen.text =  "Open" }
+                else {
+                    secondIsOpen.setTextColor(resources.getColor(R.color.red_200))
+                    secondIsOpen.text ="Closed" }
+                        secondPhoneNumber.text = body.display_phone
+                    var int = 0
+                        Glide.with(context).load(body.photos[int])
+                            .fitCenter()
+                            .transform(RoundedCornersTransformation(20, 5))
+                            .into(secondtvImage)
+                    nextImageButton.setOnClickListener {
+                        int = if (int + 1 < 3) {
+                            int + 1 } else { 0 }
+                            Glide.with(context).load(body.photos[int])
+                                .fitCenter()
+                                .transform(RoundedCornersTransformation(20, 5))
+                                .into(secondtvImage)
+                    }
                 }
 
                 override fun onFailure(call: Call<YelpRestaurantResult>, t: Throwable) {
