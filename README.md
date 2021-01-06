@@ -1,4 +1,4 @@
-# YelpCoffeeTea
+# YelpCoffee&Tea
 - Android app displays coffee/tea locations in specified city through Yelp API
 - Uses RetroFit library to retreive data asynchronously 
 - Displays a new screen activity with multiple images and information for each business
