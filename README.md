@@ -9,6 +9,7 @@
 ### Uses: 
 - [Kotlin](https://kotlinlang.org/)
 - [Yelp API](https://www.yelp.com/developers)
+- [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 - [RetroFit](https://square.github.io/retrofit/)
 - [Glide Library](https://github.com/bumptech/glide)
  
