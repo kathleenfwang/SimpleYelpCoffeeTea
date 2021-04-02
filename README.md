@@ -1,5 +1,5 @@
 # YelpCoffee&Tea
-- Android app displays coffee/tea locations in specified city through [Yelp API](https://www.yelp.com/developers)
+- Android app displays coffee/tea locations in specified city through [Yelp API](https://www.yelp.com/developers) with `RecyclerView`
 - Uses [RetroFit](https://square.github.io/retrofit/) library to retreive API data asynchronously 
 - Images rendered and cached using [Glide Library](https://github.com/bumptech/glide)
 - Displays a new screen activity with multiple images and information for each business
