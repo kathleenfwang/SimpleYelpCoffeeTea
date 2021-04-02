@@ -13,3 +13,8 @@
 - [RetroFit](https://square.github.io/retrofit/)
 - [Glide Library](https://github.com/bumptech/glide)
  
+### Reflection:
+- In the future I would like to add: 
+ - current user location handling when retrieving results (currently it is default to New York) 
+
+This was a fun personal project as I love using my phone to browse for new coffee/tea places in my city! It was challenging getting the slideshow of buisness images.  
