@@ -16,6 +16,6 @@
 ### Reflection:
 - In the future I would like to add: 
   - current user location handling when retrieving results (currently it is default to New York) 
-  - more relevate data concerning current user - such as when it would be open or closing (i.e. "Closes in 30 mins")
+  - more relevate data concerning current user - such as when the business would be open or closing (i.e. "Closes in 30 mins")
 
 This was a fun personal project as I love using my phone to browse for new coffee/tea places in my city! It was challenging getting the slideshow of buisness images.  
