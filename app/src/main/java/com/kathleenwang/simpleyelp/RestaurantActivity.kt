@@ -17,8 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val TAG ="MainActivity"
 public const val BASE_URL = "https://api.yelp.com/v3/"
 public const val API_KEY = "-zAwAo1fT9CXF9XM1FnCNExAG930j7UTOtG_NMgFPgUa8IBIJhD5WDCCg4Zz45M6K9VGXnYXNdSbFDOhaKDAMKj1wv6L000PAeTQJ_6HFcbiP-wUONHFgq7O_YLrX3Yx"
-private var SEARCH = "coffee"
-private var LOCATION = "New York"
 
 class RestaurantActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,28 +24,28 @@ class RestaurantActivity : AppCompatActivity() {
         setContentView(R.layout.activity_restaurant)
         // take response and create recycler view and render data
         // recycler view uses an adapter to render list item data
-
+        var SEARCH =   getIntent().getStringExtra("choice");
+        var LOCATION =  getIntent().getStringExtra("location");
+        editLocation.setText(LOCATION);
+        categoryButton.setText(SEARCH);
         startButton.setOnClickListener {
             LOCATION = editLocation.text.toString()
-            getRestaurant()
+            getRestaurant(SEARCH!!,LOCATION!!)
         }
-
         categoryButton.setOnClickListener {
-            if (categoryButton.text == "Coffee") {
-                categoryButton.text = "Tea"
-                SEARCH = "Coffee"
-            }
-            else {
-                categoryButton.text =  "Coffee"
+            if (categoryButton.text == "coffee") {
+                categoryButton.text = "tea"
                 SEARCH = "tea"
             }
-
-            getRestaurant()
+            else {
+                categoryButton.text =  "coffee"
+                SEARCH = "coffee"
+            }
+            getRestaurant(SEARCH!!,LOCATION!!)
         }
-        getRestaurant()
+        getRestaurant(SEARCH!!,LOCATION!!)
     }
-
-    private fun getRestaurant( ) {
+    private fun getRestaurant(SEARCH:String, LOCATION:String) {
         val restaurants = mutableListOf<YelpRestaurants>()
         val adapter = RestaurantsAdapter(this, restaurants)
         rvRestaurants.adapter = adapter
@@ -64,6 +62,7 @@ class RestaurantActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val yelpService = retrofit.create(YelpService::class.java)
+
         yelpService.searchRestaurant("Bearer $API_KEY", SEARCH, LOCATION)
             .enqueue(object : Callback<YelpSearchResult> {
                 override fun onResponse(
@@ -78,11 +77,13 @@ class RestaurantActivity : AppCompatActivity() {
                     restaurants.addAll(body.restaurants)
                     adapter.notifyDataSetChanged()
                 }
-
                 override fun onFailure(call: Call<YelpSearchResult>, t: Throwable) {
                     Log.d(TAG, "Failure: $t")
                 }
             })
     }
+
+
+
 
 }

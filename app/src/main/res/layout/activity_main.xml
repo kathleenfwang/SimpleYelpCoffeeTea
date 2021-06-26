@@ -25,19 +25,22 @@
             android:gravity="center"
             android:text="City:"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/editText_main_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="10sp"
+            android:layout_marginLeft="10sp"
+            android:width="200sp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="San Francisco"
+            android:text="New York"
             android:textColor="#FBFBFB"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
@@ -45,36 +48,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
-        android:background="#9A9994"
+        android:background="#676060"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <RadioButton
-            android:id="@+id/radioBtn_main_coffee"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:paddingRight="20sp"
-            android:text="Coffee"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/radioBtn_main_tea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tea"
-            android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/radio_main_coffee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginRight="10sp"
+                android:text="Coffee"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
+            <RadioButton
+                android:id="@+id/radio_main_tea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tea"
+                android:textColor="#F5F1F1"
+                android:textSize="16sp" />
+        </RadioGroup>
     </LinearLayout>
 
     <Button
-        android:layout_marginTop="20sp"
-        android:padding="10dp"
         android:id="@+id/btn_main_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:padding="10dp"
         android:text="Go"
-        app:backgroundTint="#676060" />
+        app:backgroundTint="#8C793E" />
 </LinearLayout>
